@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Song for Naman</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="page-container">
+        <header>
+            <nav>
+                <a href="page1.html">Home</a>
+                <a href="special-message.html">Message</a>
+                <a href="birthday-story.html">Story</a>
+                <a href="gallery.html">Photos</a>
+                <a href="music.html">Song</a>
+                <a href="quiz.html">Quiz</a>
+                <a href="celebrate.html">Celebrate</a>
+                <a href="wish.html">Wish Wall</a>
+            </nav>
+        </header>
+        <div class="card">
+            <h2>Play Your Happy Birthday Song</h2>
+            <p>Paste your song link below (MP3 or direct stream URL). Save it so the site remembers your choice.</p>
+            <div style="display:grid;gap:12px;margin-top:14px;">
+                <input id="song-input" placeholder="https://.../song.mp3" style="padding:12px;border-radius:12px;" />
+                <div style="display:flex;gap:12px;align-items:center;">
+                    <button id="save-song-btn" class="hero-button">Save Song</button>
+                    <button id="play-song-btn" class="hero-button hero-button-secondary">Play</button>
+                </div>
+                <div class="action-box">
+                    <audio id="main-audio" controls style="width:100%;"></audio>
+                </div>
+            </div>
+            <p style="margin-top: 12px; color: #dcd5c5;">Tip: Use a direct MP3 URL or a file hosted online. If playback is blocked, click Play to allow audio.</p>
+        </div>
+        <div class="card">
+            <h2>Wish List for Your 18th Year</h2>
+            <p>May your 18th year be full of unforgettable adventures, new friendships, bright achievements, and joyful surprises. You deserve a year that shines as beautifully as you do.</p>
+        </div>
+    </main>
+    <footer>
+        A musical page just for Avika's birthday celebration.
+    </footer>
+    <script>
+        const songInput = document.getElementById('song-input');
+        const saveBtn = document.getElementById('save-song-btn');
+        const playBtn = document.getElementById('play-song-btn');
+        const mainAudio = document.getElementById('main-audio');
+
+        const saved = localStorage.getItem('siteSong');
+        if(saved){ songInput.value = saved; mainAudio.src = saved; }
+
+        saveBtn.addEventListener('click', ()=>{
+            const url = songInput.value.trim();
+            if(!url){ alert('Paste a song URL first'); return; }
+            localStorage.setItem('siteSong', url);
+            mainAudio.src = url;
+            alert('Song saved. Click Play to start.');
+        });
+
+        playBtn.addEventListener('click', ()=>{
+            const url = songInput.value.trim();
+            if(!url){ alert('Paste a song URL first'); return; }
+            if(mainAudio.src !== url) mainAudio.src = url;
+            mainAudio.play().catch(()=>alert('Playback blocked by browser. Click Play again or allow autoplay.'));
+        });
+    </script>
+</body>
+</html>

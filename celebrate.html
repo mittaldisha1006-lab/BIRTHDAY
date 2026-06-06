@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Celebrate — Add Photos & Song</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <main class="page-container">
+        <header>
+            <nav>
+                <a href="page1.html">Home</a>
+                <a href="special-message.html">Message</a>
+                <a href="birthday-story.html">Story</a>
+                <a href="gallery.html">Photos</a>
+                <a href="music.html">Song</a>
+                <a href="quiz.html">Quiz</a>
+                <a href="wish.html">Wish Wall</a>
+                <a href="celebrate.html">Celebrate</a>
+            </nav>
+        </header>
+
+        <section class="card celebrate-hero">
+            <div style="flex:1; min-width:280px;">
+                <h2>Set Up Photos & Song</h2>
+                <p>Prepare a tab where you can add photos of Disha, Naman, and yourself, and paste a song link (MP3 or streaming link). When you blow the candle, the song will play automatically.</p>
+
+                <div class="tabs" id="tabs">
+                    <button class="tab-btn active" data-tab="q">Question</button>
+                    <button class="tab-btn" data-tab="photos">Photos</button>
+                    <button class="tab-btn" data-tab="song">Song</button>
+                </div>
+
+                <div class="tab-panel active" id="tab-q">
+                    <h3>Question for Disha</h3>
+                    <p>When did you first talk to Disha?</p>
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;">
+                        <button class="tab-btn" id="ans-8">8th class</button>
+                        <button class="tab-btn" id="ans-9">9th class</button>
+                        <button class="tab-btn" id="ans-7">7th class</button>
+                    </div>
+                </div>
+
+                <div class="tab-panel" id="tab-photos">
+                    <h3>Photo Upload Links</h3>
+                    <p>Paste image URLs for each person and click Add.</p>
+                    <div style="display:grid;gap:10px;margin-top:12px;">
+                        <input id="img-disha" placeholder="Disha photo URL" />
+                        <input id="img-naman" placeholder="Naman photo URL" />
+                        <input id="img-me" placeholder="Your photo URL" />
+                        <button id="add-photos" class="tab-btn">Add Photos</button>
+                    </div>
+                </div>
+
+                <div class="tab-panel" id="tab-song">
+                    <h3>Song Link</h3>
+                    <p>Paste an MP3 link or streaming URL and click Save. The candle blow will play this song.</p>
+                    <input id="song-url" placeholder="https://.../song.mp3" />
+                    <div style="margin-top:12px;display:flex;gap:12px;"><button id="save-song" class="tab-btn">Save Song</button><button id="test-song" class="tab-btn">Test Play</button></div>
+                </div>
+
+            </div>
+
+            <div style="width:240px;display:flex;flex-direction:column;align-items:center;gap:16px;">
+                <div class="candle" id="candle">
+                    <div class="flame" id="flame"></div>
+                </div>
+                <button id="blow" class="tab-btn vibrant">Blow Candle</button>
+                <audio id="celebrate-audio" preload="none"></audio>
+            </div>
+        </section>
+
+        <section class="card" style="margin-top:22px;">
+            <h3>Preview Photos</h3>
+            <div id="photo-previews" class="gallery-grid">
+                <div class="gallery-img" id="preview-disha" style="background:#10243b; display:flex;align-items:center;justify-content:center;color:#cbd6e6;">Disha</div>
+                <div class="gallery-img" id="preview-naman" style="background:#10243b; display:flex;align-items:center;justify-content:center;color:#cbd6e6;">Naman</div>
+                <div class="gallery-img" id="preview-me" style="background:#10243b; display:flex;align-items:center;justify-content:center;color:#cbd6e6;">You</div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="toast" class="toast">Saved!</div>
+
+    <script>
+        // Tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const tab = btn.dataset.tab;
+                if (tab) switchTab(tab);
+            });
+        });
+
+        function switchTab(name){
+            document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn[data-tab]').forEach(b=>{ if(b.dataset.tab===name) b.classList.add('active')});
+            document.getElementById('tab-'+name).classList.add('active');
+        }
+
+        // Question answers show popup
+        document.getElementById('ans-8').addEventListener('click',()=>showToast('Nice! You first talked in 8th class.'));
+        document.getElementById('ans-9').addEventListener('click',()=>showToast('9th? Good memory!'));
+        document.getElementById('ans-7').addEventListener('click',()=>showToast('7th class — that was early!'));
+
+        // Photos
+        document.getElementById('add-photos').addEventListener('click',()=>{
+            const d = document.getElementById('img-disha').value.trim();
+            const n = document.getElementById('img-naman').value.trim();
+            const m = document.getElementById('img-me').value.trim();
+            if(d) document.getElementById('preview-disha').innerHTML = `<img src="${d}" alt="Disha" style="width:100%;height:100%;object-fit:cover;border-radius:18px;">`;
+            if(n) document.getElementById('preview-naman').innerHTML = `<img src="${n}" alt="Naman" style="width:100%;height:100%;object-fit:cover;border-radius:18px;">`;
+            if(m) document.getElementById('preview-me').innerHTML = `<img src="${m}" alt="You" style="width:100%;height:100%;object-fit:cover;border-radius:18px;">`;
+            showToast('Photos added to preview. You can replace URLs anytime.');
+        });
+
+        // Song
+        const audio = document.getElementById('celebrate-audio');
+        document.getElementById('save-song').addEventListener('click', ()=>{
+            const url = document.getElementById('song-url').value.trim();
+            if(!url){ showToast('Please paste a song URL.'); return; }
+            audio.src = url;
+            showToast('Song saved. It will play when you blow the candle.');
+        });
+        document.getElementById('test-song').addEventListener('click', ()=>{
+            const url = document.getElementById('song-url').value.trim();
+            if(!url){ showToast('Please paste a song URL first.'); return; }
+            audio.src = url; audio.play();
+            showToast('Playing song preview...');
+        });
+
+        // Blow candle -> animate flame and play song
+        document.getElementById('blow').addEventListener('click', ()=>{
+            const flame = document.getElementById('flame');
+            flame.classList.add('blow');
+            showToast('Make a wish! Song will play shortly.');
+            // small delay then play
+            setTimeout(()=>{
+                try{ audio.play(); showToast('Song is playing — Happy Birthday!'); }catch(e){ showToast('Cannot autoplay: browser blocked playback. Click Test Play.'); }
+            }, 900);
+            // reset flame after animation
+            setTimeout(()=>{ flame.classList.remove('blow'); }, 1800);
+        });
+
+        // Toast
+        function showToast(text){
+            const t = document.getElementById('toast');
+            t.textContent = text; t.classList.add('show');
+            setTimeout(()=> t.classList.remove('show'), 2800);
+        }
+    </script>
+</body>
+</html>

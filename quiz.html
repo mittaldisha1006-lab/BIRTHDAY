@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friendship Quiz for Naman</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="page-container">
+        <header>
+            <nav>
+                <a href="page1.html">Home</a>
+                <a href="special-message.html">Message</a>
+                <a href="birthday-story.html">Story</a>
+                <a href="gallery.html">Photos</a>
+                <a href="music.html">Song</a>
+                <a href="quiz.html">Quiz</a>
+            </nav>
+        </header>
+
+        <div class="card">
+            <h2>Friendship Quiz for Naman</h2>
+            <p>Answer a few fun questions about your story together — the first time you spoke in 8th class, the month without talking, and the support that made your friendship stronger.</p>
+        </div>
+
+        <div class="card quiz-section">
+            <p class="quiz-question" id="question-text">Question 1 of 4: When did you first talk to Naman?</p>
+            <div class="quiz-options" id="options">
+                <button class="quiz-option" data-answer="8th">8th class</button>
+                <button class="quiz-option" data-answer="9th">9th class</button>
+                <button class="quiz-option" data-answer="7th">7th class</button>
+            </div>
+            <div class="quiz-result" id="quiz-result">Pick an answer and then click Next.</div>
+            <button id="next-btn">Next</button>
+        </div>
+
+        <div class="card">
+            <h2>Our Story in Short</h2>
+            <ul class="timeline">
+                <li><strong>First chat:</strong> We first spoke in 8th class when sir gave us a task during a celebration.</li>
+                <li><strong>Big fight:</strong> After a disagreement, there was about one month without talking.</li>
+                <li><strong>Sorry moment:</strong> Saying sorry brought us back together and made the friendship stronger.</li>
+                <li><strong>Support today:</strong> You have stayed by my side, supporting and caring for me through 12th.</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        A fun quiz to celebrate the story of Naman and your friendship.
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                text: 'When did you first talk to Naman?',
+                options: ['8th', '9th', '7th'],
+                answer: '8th'
+            },
+            {
+                text: 'Why did you first start talking?',
+                options: ['Sir gave work during celebration', 'You sat together in the cafeteria', 'You met at a birthday party'],
+                answer: 'Sir gave work during celebration'
+            },
+            {
+                text: 'How long did you not talk after the fight?',
+                options: ['One month', 'One week', 'One day'],
+                answer: 'One month'
+            },
+            {
+                text: 'What is one thing Naman always gives you?',
+                options: ['Support and care', 'A new phone', 'A surprise gift'],
+                answer: 'Support and care'
+            }
+        ];
+
+        let currentIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options');
+        const quizResult = document.getElementById('quiz-result');
+        const nextBtn = document.getElementById('next-btn');
+
+        function renderQuestion() {
+            const current = questions[currentIndex];
+            questionText.textContent = `Question ${currentIndex + 1} of ${questions.length}: ${current.text}`;
+            optionsContainer.innerHTML = current.options.map(option => `
+                <button class="quiz-option" data-answer="${option}">${option}</button>
+            `).join('');
+            selectedAnswer = null;
+            quizResult.textContent = 'Pick an answer and then click Next.';
+            attachOptionHandlers();
+        }
+
+        function attachOptionHandlers() {
+            document.querySelectorAll('.quiz-option').forEach(button => {
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.quiz-option').forEach(btn => btn.classList.remove('selected'));
+                    button.classList.add('selected');
+                    selectedAnswer = button.dataset.answer;
+                });
+            });
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (!selectedAnswer) {
+                quizResult.textContent = 'Please choose one answer before moving on.';
+                return;
+            }
+
+            const current = questions[currentIndex];
+            if (selectedAnswer === current.answer) {
+                score += 1;
+                quizResult.textContent = 'Great! That answer is correct.';
+            } else {
+                quizResult.textContent = `Oops! The right answer was: ${current.answer}.`;
+            }
+
+            document.querySelectorAll('.quiz-option').forEach(btn => {
+                btn.disabled = true;
+                if (btn.dataset.answer === current.answer) {
+                    btn.classList.add('correct');
+                } else if (btn.classList.contains('selected')) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            if (currentIndex < questions.length - 1) {
+                nextBtn.textContent = 'Next';
+                nextBtn.disabled = true;
+                setTimeout(() => {
+                    currentIndex += 1;
+                    renderQuestion();
+                    nextBtn.disabled = false;
+                }, 1200);
+            } else {
+                questionText.textContent = 'Quiz complete!';
+                quizResult.innerHTML = `You got <span class="score-badge">${score} / ${questions.length}</span>. Thank you for playing!`;
+                nextBtn.textContent = 'Play Again';
+                nextBtn.disabled = false;
+                nextBtn.addEventListener('click', () => {
+                    currentIndex = 0;
+                    score = 0;
+                    renderQuestion();
+                    nextBtn.textContent = 'Next';
+                }, { once: true });
+            }
+        });
+
+        renderQuestion();
+    </script>
+</body>
+</html>

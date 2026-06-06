@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friendship Photo Space</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="page-container">
+        <header>
+            <nav>
+                <a href="page1.html">Home</a>
+                <a href="special-message.html">Message</a>
+                <a href="birthday-story.html">Story</a>
+                <a href="gallery.html">Photos</a>
+                <a href="music.html">Song</a>
+                <a href="quiz.html">Quiz</a>
+                <a href="celebrate.html">Celebrate</a>
+                <a href="wish.html">Wish Wall</a>
+            </nav>
+        </header>
+        <div class="card">
+            <h2>Photo Space for Naman</h2>
+            <p>Below are empty spaces where you can add your favorite photos later. Simply replace these placeholders with your images or links to create a beautiful birthday album.</p>
+            <div class="placeholder-grid">
+                <div class="placeholder">
+                    <strong>Image 1</strong>
+                    Paste your first birthday photo here.
+                </div>
+                <div class="placeholder">
+                    <strong>Image 2</strong>
+                    Paste your friend group photo here.
+                </div>
+                <div class="placeholder">
+                    <strong>Image 3</strong>
+                    Paste your favorite memory here.
+                </div>
+                <div class="placeholder">
+                    <strong>Image 4</strong>
+                    Add a surprise picture or collage here.
+                </div>
+            </div>
+
+            <div style="margin-top:18px;">
+                <h3>Add a Photo (URL)</h3>
+                <input id="new-photo-url" placeholder="https://...jpg or png" style="width:100%; padding:10px; border-radius:10px;" />
+                <input id="new-photo-caption" placeholder="Caption (optional)" style="width:100%; padding:10px; border-radius:10px; margin-top:8px;" />
+                <button id="add-photo-btn" class="hero-button" style="margin-top:10px;">Add to Gallery</button>
+            </div>
+            <div class="gallery-grid" id="user-gallery" style="margin-top:18px;"></div>
+        </div>
+    </main>
+    <footer>
+        Leave these image spaces ready for your favorite birthday memories.
+    </footer>
+    <script>
+        const addBtn = document.getElementById('add-photo-btn');
+        const urlInput = document.getElementById('new-photo-url');
+        const capInput = document.getElementById('new-photo-caption');
+        const gallery = document.getElementById('user-gallery');
+
+        function renderGallery(){
+            const items = JSON.parse(localStorage.getItem('userGallery')||'[]');
+            gallery.innerHTML = items.map(it => `\n                <div>\n                    <img src="${it.url}" class="gallery-img" alt="${it.caption||''}">\n                    ${it.caption?`<div style="color:#e8dbc2;margin-top:8px;">${it.caption}</div>`:''}\n                </div>\n            `).join('');
+        }
+
+        addBtn.addEventListener('click', ()=>{
+            const url = urlInput.value.trim();
+            const cap = capInput.value.trim();
+            if(!url){ alert('Please paste an image URL.'); return; }
+            const items = JSON.parse(localStorage.getItem('userGallery')||'[]');
+            items.unshift({ url, caption: cap });
+            localStorage.setItem('userGallery', JSON.stringify(items));
+            urlInput.value = ''; capInput.value = '';
+            renderGallery();
+        });
+
+        renderGallery();
+    </script>
+</body>
+</html>

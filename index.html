@@ -1,17 +1,26 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naman's 18th Birthday</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Make a Wish — Naman</title>
+    <link rel="stylesheet" href="styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .countdown { text-align:center; }
+        .countdown h1 { font-size: clamp(2.2rem, 5vw, 4rem); margin: 8px 0; }
+        .time-grid { display:flex; gap:18px; justify-content:center; margin-top:18px; }
+        .time-cell { background: rgba(255,255,255,0.06); padding:18px 22px; border-radius:14px; min-width:80px; }
+        .time-cell strong { display:block; font-size:1.8rem; color:#fff; }
+        .small { color:#e6dbc8; margin-top:8px; }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="page-container">
+    <main class="page-container">
+        <header>
             <nav>
-                <a href="page1.html">Home</a>
+                <a href="page1.html">Enter Site</a>
                 <a href="special-message.html">Message</a>
                 <a href="birthday-story.html">Story</a>
                 <a href="gallery.html">Photos</a>
@@ -20,77 +29,90 @@
                 <a href="celebrate.html">Celebrate</a>
                 <a href="wish.html">Wish Wall</a>
             </nav>
-        </div>
-    </header>
+        </header>
 
-    <main class="page-container">
-        <section class="hero">
-            <div class="hero-left">
-                <h1>Happy 18th Birthday, Naman!</h1>
-                <p>This surprise site is built for you — a special place with friendship memories, photos, music, a quick friendship quiz, and a heartfelt message from your best friend.</p>
-                <div class="hero-buttons">
-                    <a class="hero-button" href="special-message.html">Read the Message</a>
-                    <a class="hero-button hero-button-secondary" href="music.html">Play the Song</a>
-                </div>
-                <div class="balloon-row">
-                    <div class="balloon"></div>
-                    <div class="balloon"></div>
-                    <div class="balloon"></div>
-                    <div class="balloon"></div>
+        <section class="hero card countdown">
+            <h1 class="handwritten">Make a Wish for Naman</h1>
+            <p class="small">Set the date, wait for the countdown, then blow the candle to enter the site.</p>
+
+            <div style="max-width:560px;margin:18px auto;display:grid;gap:10px;">
+                <input id="target-date" type="datetime-local" style="padding:12px;border-radius:10px;" />
+                <div style="display:flex;gap:10px;justify-content:center;">
+                    <button id="save-date" class="hero-button">Save Date</button>
+                    <button id="skip-date" class="hero-button hero-button-secondary">Skip / Start Now</button>
                 </div>
             </div>
-            <img class="hero-photo" src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=900&q=80" alt="Birthday celebration photo">
+
+            <div id="timer" style="margin-top:12px;">
+                <div class="time-grid">
+                    <div class="time-cell"><strong id="days">--</strong><div class="small">Days</div></div>
+                    <div class="time-cell"><strong id="hours">--</strong><div class="small">Hours</div></div>
+                    <div class="time-cell"><strong id="minutes">--</strong><div class="small">Minutes</div></div>
+                    <div class="time-cell"><strong id="seconds">--</strong><div class="small">Seconds</div></div>
+                </div>
+            </div>
+
+            <div style="margin-top:22px;display:flex;gap:20px;align-items:center;justify-content:center;flex-wrap:wrap;">
+                <div class="candle" id="start-candle">
+                    <div class="flame" id="start-flame"></div>
+                </div>
+                <button id="blow-start" class="tab-btn vibrant">Blow Candle & Enter</button>
+            </div>
         </section>
-
-        <div class="card">
-            <h2>Celebrate Naman</h2>
-            <p>Naman, you are turning 18 and this website is your birthday surprise. It brings together fun pages, memories from your friendship, a photo gallery, a song, and a quick quiz to make the celebration more exciting.</p>
-        </div>
-
-        <div class="card">
-            <h2>Friendship Quiz</h2>
-            <p>Try the short friendship quiz to relive the story of how you first met in 8th class, the month without talking, and how your care and support turned the fight into a stronger bond.</p>
-            <a class="hero-button hero-button-secondary" href="quiz.html">Play the Quiz</a>
-        </div>
-
-        <div class="card">
-            <h2>Wish Wall</h2>
-            <p>Write a short birthday wish or message for Naman, then watch the wall fill with love, memories, and cheers.</p>
-            <a class="hero-button hero-button-secondary" href="wish.html">Open the Wish Wall</a>
-        </div>
-
-        <div class="info-grid">
-            <div class="info-card">
-                <h3>Friendship Since Class 8</h3>
-                <p>Your friendship has grown through school, exams, and laughter. This page celebrates the journey from class 8 to today.</p>
-            </div>
-            <div class="info-card">
-                <h3>Friendship Quiz</h3>
-                <p>Answer quick questions about your story and see how well the quiz remembers the moments that made you best friends.</p>
-            </div>
-            <div class="info-card">
-                <h3>Photo Gallery</h3>
-                <p>Use the gallery to show your best memories. Later you can replace the sample photos with your own friendship pictures.</p>
-            </div>
-            <div class="info-card">
-                <h3>Birthday Music</h3>
-                <p>Open the music page to listen to a birthday song and enjoy the celebration with your favorite tune.</p>
-            </div>
-        </div>
     </main>
 
-    <footer>
-        <div>
-            <span class="handwritten">A special birthday site</span> — <span id="site-author" class="site-author" contenteditable="true">Made by you (click to edit)</span>
-        </div>
-    </footer>
     <script>
-        // persist editable author name
-        const authorEl = document.getElementById('site-author');
-        const saved = localStorage.getItem('siteAuthor');
-        if (saved) authorEl.textContent = saved;
-        authorEl.addEventListener('input', () => {
-            localStorage.setItem('siteAuthor', authorEl.textContent.trim());
+        // date storage
+        const dateInput = document.getElementById('target-date');
+        const saveBtn = document.getElementById('save-date');
+        const skipBtn = document.getElementById('skip-date');
+        const blowBtn = document.getElementById('blow-start');
+        const flame = document.getElementById('start-flame');
+
+        let target = localStorage.getItem('targetDate');
+        if(target) dateInput.value = target;
+
+        saveBtn.addEventListener('click', ()=>{
+            if(!dateInput.value){ alert('Choose a date and time first'); return; }
+            localStorage.setItem('targetDate', dateInput.value);
+            target = dateInput.value; startTimer();
+            alert('Date saved. Countdown started.');
+        });
+
+        skipBtn.addEventListener('click', ()=>{ localStorage.removeItem('targetDate'); window.location.href='page1.html'; });
+
+        function updateClock(){
+            const now = new Date();
+            const t = target ? new Date(target) : now;
+            const diff = Math.max(0, t - now);
+            const d = Math.floor(diff / (1000*60*60*24));
+            const h = Math.floor((diff/(1000*60*60))%24);
+            const m = Math.floor((diff/60000)%60);
+            const s = Math.floor((diff/1000)%60);
+            document.getElementById('days').textContent = String(d).padStart(2,'0');
+            document.getElementById('hours').textContent = String(h).padStart(2,'0');
+            document.getElementById('minutes').textContent = String(m).padStart(2,'0');
+            document.getElementById('seconds').textContent = String(s).padStart(2,'0');
+
+            if(diff<=0){
+                // enable blow
+                blowBtn.disabled = false; blowBtn.classList.add('vibrant');
+            }
+        }
+
+        function startTimer(){
+            if(!target) return;
+            updateClock();
+            window._countdown = setInterval(updateClock,1000);
+        }
+
+        // initialize
+        if(target) startTimer(); else { document.getElementById('days').textContent='--'; blowBtn.disabled=false; }
+
+        // Blow action: animate and then go to page1
+        blowBtn.addEventListener('click', ()=>{
+            flame.classList.add('blow');
+            setTimeout(()=>{ window.location.href='page1.html'; }, 900);
         });
     </script>
 </body>

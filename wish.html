@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wish Wall for Naman</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="page-container">
+        <header>
+            <nav>
+                <a href="page1.html">Home</a>
+                <a href="special-message.html">Message</a>
+                <a href="birthday-story.html">Story</a>
+                <a href="gallery.html">Photos</a>
+                <a href="music.html">Song</a>
+                <a href="quiz.html">Quiz</a>
+                <a href="wish.html">Wish Wall</a>
+            </nav>
+        </header>
+
+        <div class="card">
+            <h2>Wish Wall for Naman</h2>
+            <p>Send a short birthday wish or memory for Naman. Add a message and watch the wall fill up with loving notes from friends who have been with him since class 8.</p>
+        </div>
+
+        <div class="card wish-form">
+            <h2>Write Your Birthday Wish</h2>
+            <div class="wish-field">
+                <input type="text" id="wish-name" placeholder="Your name" />
+                <textarea id="wish-text" placeholder="Write your message here..."></textarea>
+                <button id="submit-wish">Add Wish</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Messages on the Wall</h2>
+            <ul class="wish-list" id="wish-list">
+                <li class="wish-item">
+                    <strong>Best Friend</strong>
+                    <p>Happy birthday, Naman! Thank you for caring and supporting me through 12th. Your friendship means a lot.</p>
+                </li>
+                <li class="wish-item">
+                    <strong>Class 8 partner</strong>
+                    <p>We first spoke during sir's celebration task, and I will always remember how our journey began.</p>
+                </li>
+                <li class="wish-item">
+                    <strong>Always Supportive</strong>
+                    <p>You are kind, strong, and always there when it matters most. Have an amazing birthday!</p>
+                </li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        A page to collect memories, wishes, and love for Naman's birthday.
+    </footer>
+
+    <script>
+        const wishList = document.getElementById('wish-list');
+        const submitWish = document.getElementById('submit-wish');
+        const wishName = document.getElementById('wish-name');
+        const wishText = document.getElementById('wish-text');
+
+        submitWish.addEventListener('click', () => {
+            const name = wishName.value.trim() || 'Anonymous Friend';
+            const text = wishText.value.trim();
+
+            if (!text) {
+                alert('Please write a message for Naman before adding the wish.');
+                return;
+            }
+
+            const item = document.createElement('li');
+            item.className = 'wish-item';
+            item.innerHTML = `
+                <strong>${name}</strong>
+                <p>${text}</p>
+            `;
+
+            wishList.prepend(item);
+            wishName.value = '';
+            wishText.value = '';
+        });
+    </script>
+</body>
+</html>
